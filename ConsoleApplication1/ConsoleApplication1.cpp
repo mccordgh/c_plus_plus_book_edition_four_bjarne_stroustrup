@@ -103,9 +103,9 @@ void printNumbersFromArray()
 
 double readAndSumVector(int size)
 {
-    Vector v(6);
+    Vector v(size);
 
-    cout << "Enter 5 elements:" << endl;
+    cout << "Enter " << size << " elements:" << endl;
 
     for (int i = 0; i != size; ++i)
         cin >> v[i];
@@ -113,7 +113,11 @@ double readAndSumVector(int size)
     double sum{ 0 };
 
     for (int i = 0; i != size; ++i)
+    {
+        if (i < 0 || i >= 3) throw out_of_range("readAndSumVector");
+
         sum += v[i];
+    }
 
     return sum;
 }
@@ -174,19 +178,26 @@ int main()
         cout << "#1 was not excepted" << endl;
     }*/
 
-    /*printNumbersFromArray();
-    double sum = readAndSumVector(5);
+    try
+    {
+        printNumbersFromArray();
+        double sum = readAndSumVector(8);
 
-    cout << "Vector's sum = " << sum << endl;*/
+        cout << "Vector's sum = " << sum << endl;
+    }
+    catch (out_of_range)
+    {
+        cout << "Out of range error!!!!";
+    }
 
-    Color color = Color::red;
+   /* Color color = Color::red;
     TrafficLight light = TrafficLight::green;
 
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 4; ++i)
     {
         describeTrafficLight(light);
         ++light;
-    }
+    }*/
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
