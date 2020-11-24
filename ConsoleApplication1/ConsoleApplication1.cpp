@@ -6,26 +6,65 @@
 
 using namespace std;
 
+template<typename T>
 class Vector
 {
 public:
-    Vector(int s) : elements{ new double[s]}, size{s}
-    {}
-
-    double& operator[](int i)
+    Vector(int s)
     {
+        if (s < 0) throw;
+
+        elem = new T[s];
+        sz = s;
+    }
+
+    T& operator[](int i)
+    {
+        if (i < 0 || size() <= i) throw;
+
         return elements[i];
     }
 
-    int getSize() const
+    int size() const
     {
-        return size;
+        return sz;
     }
 
 private:
-    double* elements;
-    int size;
+    T* elements;
+    int sz;
 };
+
+void printGenericVectors()
+{
+    int size = 20;
+
+    Vector<char> vc(size);
+    Vector<string> vs(size);
+    Vector<double> vd(size);
+
+    for (int i = 0; i < size; ++i)
+    {
+        //vc[i] = "b";
+        vs[i] = "asdf";
+        vd[i] = i;
+    }
+
+    for (int i = 0; i < size; ++i)
+    {
+        cout << vc[i];
+    }
+
+    for (int i = 0; i < size; ++i)
+    {
+        cout << vs[i];
+    }
+
+    for (int i = 0; i < size; ++i)
+    {
+        cout << vd[i];
+    }
+}
 
 double square(double x)
 {
@@ -101,26 +140,26 @@ void printNumbersFromArray()
     cout << endl;
 }
 
-double readAndSumVector(int size)
-{
-    Vector v(size);
-
-    cout << "Enter " << size << " elements:" << endl;
-
-    for (int i = 0; i != size; ++i)
-        cin >> v[i];
-
-    double sum{ 0 };
-
-    for (int i = 0; i != size; ++i)
-    {
-        if (i < 0 || i >= 3) throw out_of_range("readAndSumVector");
-
-        sum += v[i];
-    }
-
-    return sum;
-}
+//double readAndSumVector(int size)
+//{
+//    Vector<double>v(size);
+//
+//    cout << "Enter " << size << " elements:" << endl;
+//
+//    for (int i = 0; i != size; ++i)
+//        cin >> v[i];
+//
+//    double sum{ 0 };
+//
+//    for (int i = 0; i != size; ++i)
+//    {
+//        if (i < 0 || i >= 3) throw out_of_range("readAndSumVector");
+//
+//        sum += v[i];
+//    }
+//
+//    return sum;
+//}
 
 enum class Color { red, blue, green };
 
@@ -181,14 +220,16 @@ int main()
     try
     {
         printNumbersFromArray();
-        double sum = readAndSumVector(8);
+        // double sum = readAndSumVector(8);
 
-        cout << "Vector's sum = " << sum << endl;
+       //cout << "Vector's sum = " << sum << endl;
     }
     catch (out_of_range)
     {
         cout << "Out of range error!!!!";
     }
+
+    printGenericVectors();
 
    /* Color color = Color::red;
     TrafficLight light = TrafficLight::green;
